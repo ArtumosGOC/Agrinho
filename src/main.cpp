@@ -52,26 +52,25 @@ void loop()
     }
     else
     {
-        display.renderText("T: " + String(temperature) + "C");
-        delay(2000);
-        display.clearDisplay();
-        display.renderText("H: " + String(humidity) + "%");
-        delay(2000);
-        display.clearDisplay();
-        display.renderText("SM: " + String(soilMoistureValue) + "%");
+        if(coolerOn)
+        {
+            digitalWrite(RELAY_PIN, HIGH);
+            display.renderText("Cooler On", 1, WHITE, 0, 0);
+            
+        }
+        else
+        {
+            digitalWrite(RELAY_PIN, LOW);
+            display.renderText("Cooler Off", 1, WHITE, 0, 0);
+        }
+
+        display.renderText("T: " + String(temperature) + "C", 1, WHITE, 0, 10);
+        display.renderText("H: " + String(humidity) + "%", 1, WHITE, 0, 20);
+        display.renderText("UM_S: " + String(soilMoistureValue) + "%", 1, WHITE, 0, 30);
+        display.render();
         delay(2000);
         display.clearDisplay();
     }
 
-    if(coolerOn)
-    {
-        digitalWrite(RELAY_PIN, HIGH);
-        display.renderText("Cooler On");
-    }
-    else
-    {
-        digitalWrite(RELAY_PIN, LOW);
-        display.renderText("Cooler Off");
-    }
-    delay(2000);
+   
 }
