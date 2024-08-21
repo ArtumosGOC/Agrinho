@@ -10,6 +10,7 @@ void DHTWrapper::begin() {
 float DHTWrapper::getTemperature() {
     return this->dht.readTemperature();
 }
+
 float DHTWrapper::getHumidity() {
     return this->dht.readHumidity();
 }

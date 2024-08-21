@@ -16,7 +16,9 @@
 class DHTWrapper {
 public:
     DHTWrapper(uint8_t pin, uint8_t type);
+
     void begin();
+    
     float getTemperature();
     float getHumidity();
 
