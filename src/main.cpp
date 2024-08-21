@@ -14,7 +14,7 @@ void setup()
     display.begin();
     delay(2000);
     display.clearDisplay();
-    display.renderText("Hello World");
+    display.renderText("Teste de Display");
     delay(2000);
     display.clearDisplay();
 
