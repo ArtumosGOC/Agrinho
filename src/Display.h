@@ -20,9 +20,13 @@ class DP
 {
     public:
         DP(uint8_t w, uint8_t h, int8_t rst_pin);
+
         void clearDisplay();
+
         void begin();
+
         void render();
+
         void renderText(String text, uint8_t size, uint8_t color, uint8_t x, uint8_t y);
         void renderText(String text);
 
@@ -31,6 +35,8 @@ class DP
         uint8_t w;
         uint8_t h;
         int8_t rst_pin;
+
         String initMessage;
+        
         Adafruit_SSD1306 display;
 };

@@ -9,10 +9,12 @@ DP::DP(uint8_t w, uint8_t h, int8_t rst_pin)
 
     this->display = Adafruit_SSD1306(w, h, &Wire, -1);
 }
+
 void DP::render()
 {
     this->display.display();
 }
+
 void DP::clearDisplay()
 {
     this->display.clearDisplay();
@@ -48,6 +50,7 @@ void DP::renderText(String text)
     this->display.println(text);
     this->display.display();
 }
+
 void DP::renderText(String text, uint8_t size, uint8_t color, uint8_t x, uint8_t y)
 {
     this->display.setTextSize(size);
