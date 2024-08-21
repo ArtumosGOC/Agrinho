@@ -1,0 +1,60 @@
+#include <Wire.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_GFX.h>
+#include <DHT.h>
+
+// Defina os pinos
+#define SOIL_MOISTURE_PIN A0  // Pino analógico para o sensor de umidade do solo
+#define RELAY_PIN 7           // Pino digital para o relé do cooler (ventilação)
+
+
+void loop() {
+  // Leia a umidade do solo
+  int soilMoistureValue = analogRead(SOIL_MOISTURE_PIN);
+  
+  // Leia a temperatura e umidade do ambiente
+  float temperature = dht.readTemperature();
+  float humidity = dht.readHumidity();
+  
+  // Verifique se as leituras do DHT11 são válidas
+  if (isnan(temperature) || isnan(humidity)) {
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println(F("Falha no DHT11"));
+    display.display();
+    return;
+  }
+  
+  // Atualize o estado do relé (cooler) com base na umidade do solo e temperatura
+  bool coolerOn = (soilMoistureValue < 500) || (temperature > 25.0);
+  
+  if (coolerOn) {
+    digitalWrite(RELAY_PIN, HIGH); // Liga o cooler (ventilação)
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println(F("Cooler Ligado"));
+  } else {
+    digitalWrite(RELAY_PIN, LOW);  // Desliga o cooler (ventilação)
+    display.clearDisplay();
+    display.setCursor(0, 0);
+    display.println(F("Cooler Desligado"));
+  }
+  
+  // Exiba as informações no display OLED
+  display.setCursor(0, 10);
+  display.print(F("Temp: "));
+  display.print(temperature);
+  display.print(F(" C"));
+  display.setCursor(0, 20);
+  display.print(F("Umid Ar: "));
+  display.print(humidity);
+  display.print(F("%"));
+  display.setCursor(0, 30);
+  display.print(F("Umid Solo: "));
+  display.print(soilMoistureValue);
+  display.print(F(" (valor)"));
+  display.display();
+  
+  // Aguarde antes de atualizar a tela novamente
+  delay(2000);
+}
