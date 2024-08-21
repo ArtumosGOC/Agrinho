@@ -54,7 +54,6 @@ void loop() {
   display.print(soilMoistureValue);
   display.print(F(" (valor)"));
   display.display();
-  
   // Aguarde antes de atualizar a tela novamente
   delay(2000);
 }
