@@ -31,4 +31,4 @@ O Projeto Agrinho tem alcançado resultados significativos desde a sua implement
 
 O Projeto Agrinho desempenha um papel fundamental na educação rural, proporcionando aos estudantes uma experiência enriquecedora e prática em agricultura e sustentabilidade. Através de suas atividades, o projeto contribui para a formação de cidadãos conscientes e comprometidos com o meio ambiente.
 
-Observação: Este projeto foi criado para ajudar meu amigo [Munir](link), boa sorte ae!
+Observação: Este projeto foi criado para ajudar meu amigo [Munir](#), boa sorte ae!
