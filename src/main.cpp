@@ -7,10 +7,13 @@
 
 DP display(128, 64, -1);
 DHT dhtSensor(2, DHT11);
+bool coolerOn;
 
 
 void setup() 
 {
+    pinMode(RELAY_PIN, OUTPUT);
+    Serial.begin(9600);
     display.begin();
     delay(2000);
     display.clearDisplay();
@@ -40,12 +43,14 @@ void loop()
     float temperature = dhtSensor.readTemperature();
     float humidity = dhtSensor.readHumidity();
     
-    bool coolerOn = (SOIL_MOISTURE_PIN < 500) || (temperature > 25.0);
-    int soilMoistureValue = map(analogRead(SOIL_MOISTURE_PIN), 0, 1023, 0, 100);
     
+    
+    int soilMoistureValue = map(analogRead(SOIL_MOISTURE_PIN), 0, 1023, 100, 0);
+    (float)soilMoistureValue < 35 ? coolerOn = 0x1 : coolerOn = 0x0;
     
     if(isnan(temperature) || isnan(humidity))
     {
+        
         display.renderText("Error");
         delay(2000);
         display.clearDisplay();
@@ -54,23 +59,27 @@ void loop()
     {
         if(coolerOn)
         {
-            digitalWrite(RELAY_PIN, HIGH);
-            display.renderText("Cooler On", 1, WHITE, 0, 0);
+            digitalWrite(RELAY_PIN, 1);
+            display.renderText("Cooler On", 1, SSD1306_WHITE, 0, 20);
             
         }
         else
         {
-            digitalWrite(RELAY_PIN, LOW);
-            display.renderText("Cooler Off", 1, WHITE, 0, 0);
+            digitalWrite(RELAY_PIN, 0);
+            display.renderText("Cooler Off", 1, SSD1306_WHITE, 0, 20);
         }
 
-        display.renderText("T: " + String(temperature) + "C", 1, WHITE, 0, 10);
-        display.renderText("H: " + String(humidity) + "%", 1, WHITE, 0, 20);
-        display.renderText("UM_S: " + String(soilMoistureValue) + "%", 1, WHITE, 0, 30);
+        display.renderText("T: " + String(temperature) + "C", 1, SSD1306_WHITE, 0, 30);
+        display.renderText("H: " + String(humidity) + "%", 1, SSD1306_WHITE, 0, 40);
+        display.renderText("UM_S: " + String(soilMoistureValue) + "%", 1, SSD1306_WHITE, 0, 50);
         display.render();
-        delay(2000);
+        delay(500);
         display.clearDisplay();
+        delay(400);
     }
-
+    Serial.println(String(humidity) + "HUMIDADE");
+    Serial.println(String(temperature) +"TEMPERATUA");
+    Serial.println(String(soilMoistureValue) + "HUmidade do solo");
+    Serial.println(String(analogRead(SOIL_MOISTURE_PIN)) + "Valor do sensor de umidade do solo");
    
 }
