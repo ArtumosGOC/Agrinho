@@ -17,9 +17,6 @@ void setup()
     display.begin();
     delay(2000);
     display.clearDisplay();
-    display.renderText("Teste de Display");
-    delay(2000);
-    display.clearDisplay();
 
     if(![]() -> bool {
         dhtSensor.begin();
@@ -45,7 +42,7 @@ void loop()
     
     
     
-    int soilMoistureValue = map(analogRead(SOIL_MOISTURE_PIN), 0, 1023, 100, 0);
+    int soilMoistureValue = 100 - ((analogRead(SOIL_MOISTURE_PIN)) / 10.23);
     (float)soilMoistureValue < 35 ? coolerOn = 0x1 : coolerOn = 0x0;
     
     if(isnan(temperature) || isnan(humidity))
@@ -69,9 +66,9 @@ void loop()
             display.renderText("Cooler Off", 1, SSD1306_WHITE, 0, 20);
         }
 
-        display.renderText("T: " + String(temperature) + "C", 1, SSD1306_WHITE, 0, 30);
-        display.renderText("H: " + String(humidity) + "%", 1, SSD1306_WHITE, 0, 40);
-        display.renderText("UM_S: " + String(soilMoistureValue) + "%", 1, SSD1306_WHITE, 0, 50);
+        display.renderText("temperatura:"+String(temperature)+"C", 1, SSD1306_WHITE, 0, 30);
+        display.renderText("Umidade:"+String(humidity)+"%", 1, SSD1306_WHITE, 0, 40);
+        display.renderText("Solo:"+String(soilMoistureValue)+"%", 1, SSD1306_WHITE, 0, 50);
         display.render();
         delay(500);
         display.clearDisplay();
