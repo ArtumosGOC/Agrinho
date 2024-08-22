@@ -26,7 +26,7 @@ void DP::begin()
     this->display.setTextColor(SSD1306_WHITE);
     this->display.setCursor(0,0);
     
-    this->display.begin(SSD1306_SWITCHCAPVCC, 0x3C);//talvez precise citar isso, mas não tenho certeza ainda kkk;
+    //this->display.begin(SSD1306_SWITCHCAPVCC, 0x3C);//talvez precise citar isso, mas não tenho certeza ainda kkk;
     if(!this->display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
     {
         for(;;);
