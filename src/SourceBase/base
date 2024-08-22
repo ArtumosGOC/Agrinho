@@ -6,7 +6,50 @@
 // Defina os pinos
 #define SOIL_MOISTURE_PIN A0  // Pino analógico para o sensor de umidade do solo
 #define RELAY_PIN 7           // Pino digital para o relé do cooler (ventilação)
+#define DHT_PIN 2             // Pino digital para o sensor DHT11
 
+// Configure o tipo de sensor DHT (DHT11 neste caso)
+#define DHT_TYPE DHT11
+
+// Inicialize o sensor DHT
+DHT dht(DHT_PIN, DHT_TYPE);
+
+// Inicialize o display OLED (128x64 pixels neste exemplo)
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+#define OLED_RESET -1  // O OLED não precisa de um pino de reset separado
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+void setup() {
+  Serial.begin(9600); // Inicie a comunicação serial para debug
+  
+  // Tente inicializar o display OLED com o endereço 0x3C
+ {
+  dht.begin();
+  /* Inicia o display OLED, através de seu endereço */
+  /* físico 0X3C.                                   */
+  display.begin(SSD1306_SWITCHCAPVCC, 0X3C);
+  /* Limpa o display ao iniciar.                    */
+}
+
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(0, 0);
+  
+  // Configure os pinos
+  pinMode(SOIL_MOISTURE_PIN, INPUT);
+  pinMode(RELAY_PIN, OUTPUT);
+  
+  // Inicie o sensor DHT
+  dht.begin();
+  
+  // Exiba uma mensagem inicial no display OLED
+  display.println(F("Sistema de Climatizacao"));
+  display.display();
+  delay(2000);
+}
 
 void loop() {
   // Leia a umidade do solo
@@ -54,6 +97,7 @@ void loop() {
   display.print(soilMoistureValue);
   display.print(F(" (valor)"));
   display.display();
+  
   // Aguarde antes de atualizar a tela novamente
   delay(2000);
 }
