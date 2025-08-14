@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "Display.h"
-#include "Dht110.h"
+
+#include "Classes/DISPLAY.h"
+#include "Classes/DHT110.h"
 
 #define SOIL_MOISTURE_PIN A0
 #define RELAY_PIN 7
